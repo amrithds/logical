@@ -1,0 +1,59 @@
+
+<?php $a = [
+    "cdab",
+    "dcba"
+];
+$b = [
+    "abcd",
+    "abcd"
+];
+
+function twins($a, $b)
+{
+    $items = count($a);
+
+    $result = array();
+    for ($i = 0; $i < $items; $i ++) {
+        $result[$i] = 'Yes';
+        $str1 = $a[$i];
+        $str2 = $b[$i];
+        $found = true;
+
+        if (strlen($str1) == strlen($str2)) {
+            for ($k = 0; $k < strlen($str1); $k ++) {
+
+                $foundChar = false;
+                if ($str1[$k] != $str2[$k]) {
+                    $z = ($k % 2 == 0) ? 0 : 1;
+
+                    while ($z < strlen($str2)) {
+
+                        if ($k != $z && $str1[$k] == $str2[$z]) {
+                            $foundChar = true;
+                            break;
+                        }
+
+                        $z += 2;
+                    }
+                } else {
+                    $foundChar = true;
+                }
+
+                if ($foundChar == false) {
+                    $found = $foundChar;
+                    break;
+                }
+            }
+        } else {
+            $found = false;
+        }
+        if ($found == false) {
+            $result[$i] = 'No';
+        }
+    }
+
+    return $result;
+}
+
+print_r(twins($a, $b));
+die();
