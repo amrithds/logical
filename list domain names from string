@@ -1,0 +1,39 @@
+
+$lines = '["Train (noun)"](http://www.askoxford.com/concise_oed/train?view=uk). (definition – Compact OED). Oxford University Press. Retrieved 2008-03-18.
+^ Hello
+^ World
+^ C is a programming language.
+^
+^ Atchison, Topeka and Santa Fe Railway (1948). Rules: Operating Department. p. 7.
+^ [Hydrogen trains](http://www.hydrogencarsnow.com/blog2/index.php/hydrogen-vehicles/i-hear-the-hydrogen-train-a-comin-its-rolling-round-the-bend/)
+^ [Vehicle Projects Inc. Fuel cell locomotive](http://www.bnsf.com/media/news/articles/2008/01/2008-01-09a.html)
+^ Central Japan Railway (2006). Central Japan Railway Data Book 2006. p. 16.
+^ ["Overview Of the existing Mumbai Suburban Railway"](http://web.archive.org/web/20080620033027/http://www.mrvc.indianrail.gov.in/overview.htm). _Official webpage of Mumbai Railway Vikas Corporation_. Archived from [the original](http://www.mrvc.indianrail.gov.in/overview.htm) on 2008-06-20. Retrieved 2008-12-11.';
+function test($lines){
+    $line = strtok($lines, PHP_EOL);
+
+    $findAndReplace = ['www.','ww2.','web.'];
+    $output = '';
+    while ($line !== false)
+    {
+
+        preg_match_all('#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $line, $urls);
+
+        if(!empty($urls[0])){
+            foreach ($urls[0] as $url){
+
+                $domain = parse_url($url);
+
+
+                if($output != ''){
+                    $output .= ';';
+                }
+                $output .= str_replace($findAndReplace,'',$domain['host']);
+
+            }
+        }
+        $line = strtok(PHP_EOL);
+    }
+    return $output;
+}
+echo test($lines);die;
